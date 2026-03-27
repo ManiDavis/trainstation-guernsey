@@ -132,8 +132,8 @@ export default function WhyUs() {
           boxShadow: 'var(--shadow-red)',
         }}>
           <div>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.8, marginBottom: 8 }}>Limited Offer</div>
-            <h3 style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'var(--white)', fontWeight: 700 }}>FREE TRIAL ANY WEEKEND IN JULY</h3>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.8, marginBottom: 8 }}>No Commitment</div>
+            <h3 style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'var(--white)', fontWeight: 700 }}>CLAIM YOUR FREE TRIAL</h3>
           </div>
           <button
             className="btn"
