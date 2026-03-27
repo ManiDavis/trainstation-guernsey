@@ -52,17 +52,25 @@ export default function Hero() {
 
   return (
     <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden', background: 'var(--black)' }}>
-      {/* Animated background grid */}
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(227,30,36,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(227,30,36,0.06) 1px, transparent 1px)', backgroundSize: '60px 60px', animation: 'gridPan 20s linear infinite' }} />
+      {/* Gym background photo */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: 'url(/gym-hero.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 40%',
+        backgroundRepeat: 'no-repeat',
+      }} />
 
-      {/* Red glow blobs */}
-      <div style={{ position: 'absolute', top: '10%', right: '5%', width: 600, height: 600, background: 'radial-gradient(circle, rgba(227,30,36,0.18) 0%, transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', bottom: '5%', left: '-10%', width: 500, height: 500, background: 'radial-gradient(circle, rgba(227,30,36,0.10) 0%, transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
+      {/* Dark overlay — keeps text readable */}
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.62)' }} />
 
-      {/* Dark overlay at bottom */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '30%', background: 'linear-gradient(transparent, var(--black))', pointerEvents: 'none' }} />
+      {/* Red tint overlay — ties into brand */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(227,30,36,0.12) 0%, transparent 60%)' }} />
 
-      <div className="container" style={{ position: 'relative', zIndex: 2, paddingTop: 120, paddingBottom: 80 }}>
+      {/* Bottom fade into next section */}
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '35%', background: 'linear-gradient(transparent, var(--black))', pointerEvents: 'none' }} />
+
+      <div className="container" style={{ position: 'relative', zIndex: 2, paddingTop: 120, paddingBottom: 140 }}>
         {/* Eyebrow */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <div style={{ width: 32, height: 2, background: 'var(--red)' }} />
@@ -126,11 +134,7 @@ export default function Hero() {
           from { opacity: 0; }
           to   { opacity: 1; }
         }
-        @keyframes gridPan {
-          from { transform: translateY(0); }
-          to   { transform: translateY(60px); }
-        }
-        @keyframes bounce {
+@keyframes bounce {
           0%, 100% { transform: translateX(-50%) translateY(0); }
           50% { transform: translateX(-50%) translateY(8px); }
         }

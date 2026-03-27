@@ -27,7 +27,7 @@ export default function Footer({ onOpenTerms }) {
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-              <LogoMark size={36} />
+              <img src="/logo.png" alt="TrainStation" style={{ width: 36, height: 36, objectFit: 'contain' }} />
               <div>
                 <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase' }}>TrainStation</div>
                 <div style={{ fontSize: '0.55rem', letterSpacing: '0.16em', color: 'var(--muted)', textTransform: 'uppercase' }}>Strength · Fitness · Results</div>
@@ -154,16 +154,6 @@ function SocialLink({ href, label, children }) {
   )
 }
 
-function LogoMark({ size = 36 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-      <circle cx="50" cy="50" r="48" stroke="white" strokeWidth="4"/>
-      <circle cx="50" cy="50" r="36" stroke="white" strokeWidth="1.5" strokeDasharray="2 4"/>
-      <path d="M50 20 C60 30, 75 40, 72 55 C69 68, 55 75, 45 70 C32 63, 28 45, 38 35 Z" stroke="#E31E24" strokeWidth="2" fill="none"/>
-      <text x="50" y="63" textAnchor="middle" fontFamily="Oswald,sans-serif" fontWeight="700" fontSize="32" fill="white">T</text>
-    </svg>
-  )
-}
 
 function FacebookIcon() {
   return (
