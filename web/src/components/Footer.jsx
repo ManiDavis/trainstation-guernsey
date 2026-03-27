@@ -14,7 +14,7 @@ const QUICK_LINKS = [
   { href: '#contact', label: 'Free Trial' },
 ]
 
-export default function Footer() {
+export default function Footer({ onOpenTerms }) {
   const handleNav = (href) => {
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -118,9 +118,20 @@ export default function Footer() {
           <p style={{ fontSize: '0.8rem', color: 'var(--muted)', margin: 0 }}>
             © {new Date().getFullYear()} TrainStation Guernsey. All rights reserved.
           </p>
-          <p style={{ fontSize: '0.8rem', color: 'var(--muted)', margin: 0 }}>
-            Strength · Fitness · Results
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+            <a
+              href="#terms"
+              onClick={onOpenTerms}
+              style={{ fontSize: '0.8rem', color: 'var(--muted)', transition: 'color 0.2s', textDecoration: 'none' }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--red)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
+            >
+              Terms &amp; Conditions
+            </a>
+            <p style={{ fontSize: '0.8rem', color: 'var(--muted)', margin: 0 }}>
+              Strength · Fitness · Results
+            </p>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,6 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
+// All reviews with written text from Google (4.7★ · 18 reviews total)
 const REVIEWS = [
+  {
+    name: 'Natalie Jones',
+    initials: 'NJ',
+    rating: 5,
+    date: '3 years ago',
+    text: 'Great gym, light, airy, great cardio machines for your workout 💪 Megan from Isle Health is an excellent personal trainer 💪👍',
+    color: '#DB2777',
+  },
   {
     name: 'Dalton Beausire',
     initials: 'DB',
@@ -10,12 +19,36 @@ const REVIEWS = [
     color: '#2563EB',
   },
   {
+    name: 'stylawood',
+    initials: 'SW',
+    rating: 5,
+    date: '3 years ago',
+    text: 'Justin and Craig are great PTs Very friendly and helpful!',
+    color: '#059669',
+  },
+  {
     name: 'Joe Lampshire',
     initials: 'JL',
     rating: 5,
     date: '1 year ago',
     text: 'Brilliant gym, great atmosphere and a very good balance of equipment which caters for the need of all. We will be back!',
     color: '#16A34A',
+  },
+  {
+    name: 'Kenton Henley-Roussel',
+    initials: 'KH',
+    rating: 5,
+    date: '5 years ago',
+    text: 'Great gym, good equipment and not too busy',
+    color: '#7C3AED',
+  },
+  {
+    name: 'Martin Sarre',
+    initials: 'MS',
+    rating: 5,
+    date: '7 years ago',
+    text: 'Extremely friendly and helpful staff. Fantastic up to date equipment.',
+    color: '#EA580C',
   },
   {
     name: 'Chris Lewis',
@@ -31,30 +64,32 @@ const REVIEWS = [
     rating: 5,
     date: '6 years ago',
     text: 'Great equipment and friendly owner. More than I can say for other gyms around. Reasonably priced as well.',
-    color: '#7C3AED',
-  },
-  {
-    name: 'Natalie Jones',
-    initials: 'NJ',
-    rating: 5,
-    date: '3 years ago',
-    text: 'Fantastic gym with a welcoming atmosphere. Great variety of equipment and the staff are always helpful and motivating. Would highly recommend to anyone looking to get fit in Guernsey.',
-    color: '#DB2777',
-  },
-  {
-    name: 'Local Guide',
-    initials: 'LG',
-    rating: 5,
-    date: '2 years ago',
-    text: 'Top-notch facility. The Rogue equipment is in excellent condition, plenty of space, and never feels overcrowded. The personal trainers are knowledgeable and really help you make the most of your sessions.',
     color: '#0891B2',
+  },
+  {
+    name: 'Jackie Gaudion',
+    initials: 'JG',
+    rating: 5,
+    date: '7 years ago',
+    text: 'Fantastic gym, great new equipment. Love the new decor',
+    color: '#BE185D',
+  },
+  {
+    name: 'Judith Stephendon',
+    initials: 'JS',
+    rating: 4,
+    date: '7 years ago',
+    text: 'Ok a bit worn but works well',
+    color: '#64748B',
   },
 ]
 
 function Stars({ count = 5 }) {
   return (
     <div className="stars">
-      {Array.from({ length: count }).map((_, i) => <span key={i}>★</span>)}
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span key={i} style={{ color: i < count ? '#FFD700' : '#444' }}>★</span>
+      ))}
     </div>
   )
 }
@@ -77,34 +112,28 @@ function ReviewCard({ review, index }) {
     <div
       ref={ref}
       className={`card reveal reveal-delay-${(index % 3) + 1}`}
-      style={{ padding: '32px 28px', display: 'flex', flexDirection: 'column', gap: 16 }}
+      style={{ padding: '28px 24px', display: 'flex', flexDirection: 'column', gap: 14 }}
     >
-      {/* Google logo + stars */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <Stars count={review.rating} />
         <GoogleLogo />
       </div>
 
-      {/* Quote */}
-      <p style={{
-        fontSize: '0.95rem', lineHeight: 1.75, color: 'var(--off-white)',
-        flex: 1, fontStyle: 'italic',
-      }}>
+      <p style={{ fontSize: '0.92rem', lineHeight: 1.75, color: 'var(--off-white)', flex: 1, fontStyle: 'italic' }}>
         "{review.text}"
       </p>
 
-      {/* Reviewer */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8, paddingTop: 16, borderTop: '1px solid var(--dark-border)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid var(--dark-border)' }}>
         <div style={{
-          width: 40, height: 40, borderRadius: '50%', flexShrink: 0,
+          width: 38, height: 38, borderRadius: '50%', flexShrink: 0,
           background: review.color, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.9rem', color: 'white',
+          fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.85rem', color: 'white',
         }}>
           {review.initials}
         </div>
         <div>
-          <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--white)' }}>{review.name}</div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{review.date} · Google Review</div>
+          <div style={{ fontWeight: 600, fontSize: '0.88rem', color: 'var(--white)' }}>{review.name}</div>
+          <div style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>{review.date} · Google Review</div>
         </div>
       </div>
     </div>
@@ -139,38 +168,34 @@ export default function Reviews() {
   return (
     <section id="reviews" className="section section--darker">
       <div className="container">
-        {/* Header */}
         <div ref={headerRef} className="reveal" style={{ textAlign: 'center', marginBottom: 64 }}>
           <span className="section-eyebrow">What Members Say</span>
           <h2 style={{ color: 'var(--white)' }}>Real Results.<br />Real Reviews.</h2>
           <div className="red-line red-line--center" />
 
-          {/* Rating summary */}
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: '3.5rem', fontWeight: 700, color: 'var(--white)', lineHeight: 1 }}>4.7</div>
             <div>
               <Stars count={5} />
-              <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 4 }}>4.7 / 5 · 5,218 Google Reviews</div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 4 }}>4.7 / 5 · 18 Google Reviews</div>
             </div>
           </div>
         </div>
 
-        {/* Review cards */}
         <div className="grid-3">
           {REVIEWS.map((r, i) => <ReviewCard key={r.name + i} review={r} index={i} />)}
         </div>
 
-        {/* Google CTA */}
         <div style={{ textAlign: 'center', marginTop: 48 }}>
-          <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 16 }}>Love TrainStation? Leave us a review on Google!</p>
+          <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: 16 }}>Enjoyed training with us? We'd love to hear from you!</p>
           <a
-            href="https://www.google.com/search?q=The+Train+Station+Guernsey"
+            href="https://www.google.com/maps/place/The+Train+Station/@49.4653876,-2.5866608,13z"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-outline-red"
-            style={{ display: 'inline-flex' }}
+            style={{ display: 'inline-flex', gap: 8 }}
           >
-            <GoogleLogo /> Leave a Review
+            <GoogleLogo /> Leave a Google Review
           </a>
         </div>
       </div>

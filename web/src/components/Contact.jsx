@@ -218,6 +218,29 @@ export default function Contact() {
             </div>
           </div>
         </div>
+
+        {/* Google Maps embed */}
+        <div style={{ marginTop: 64 }}>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', fontWeight: 600, color: 'var(--white)', marginBottom: 20, textAlign: 'center', letterSpacing: '0.04em' }}>WHERE TO FIND US</h3>
+          <div style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--dark-border)', lineHeight: 0 }}>
+            <iframe
+              title="TrainStation Guernsey location"
+              src="https://maps.google.com/maps?q=The+Train+Station+La+Route+des+Longs+Camps+GY2+4UQ+Guernsey&output=embed&z=15"
+              width="100%"
+              height="380"
+              style={{ border: 0, filter: 'invert(0.9) hue-rotate(180deg)', display: 'block' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <p style={{ textAlign: 'center', marginTop: 14, fontSize: '0.85rem', color: 'var(--muted)' }}>
+            La Route des Longs Camps, GY2 4UQ ·{' '}
+            <a href="https://maps.google.com/maps?q=The+Train+Station+La+Route+des+Longs+Camps+GY2+4UQ+Guernsey" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--red)', fontWeight: 600 }}>
+              Open in Google Maps →
+            </a>
+          </p>
+        </div>
       </div>
     </section>
   )
