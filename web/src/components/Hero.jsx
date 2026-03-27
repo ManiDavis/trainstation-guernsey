@@ -62,7 +62,7 @@ export default function Hero() {
       {/* Dark overlay at bottom */}
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '30%', background: 'linear-gradient(transparent, var(--black))', pointerEvents: 'none' }} />
 
-      <div className="container" style={{ position: 'relative', zIndex: 2, paddingTop: 120, paddingBottom: 80 }}>
+      <div className="container" style={{ position: 'relative', zIndex: 2, paddingTop: 120, paddingBottom: 140 }}>
         {/* Eyebrow */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <div style={{ width: 32, height: 2, background: 'var(--red)' }} />

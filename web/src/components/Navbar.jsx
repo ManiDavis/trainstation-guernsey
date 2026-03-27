@@ -37,7 +37,7 @@ export default function Navbar() {
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12 }}
         >
-          <LogoMark size={40} />
+          <img src="/logo.png" alt="TrainStation" style={{ width: 40, height: 40, objectFit: 'contain' }} />
           <div style={{ textAlign: 'left' }}>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase', lineHeight: 1 }}>TrainStation</div>
             <div style={{ fontSize: '0.6rem', letterSpacing: '0.18em', color: 'var(--muted)', textTransform: 'uppercase', marginTop: 3 }}>Strength · Fitness · Results</div>
@@ -114,13 +114,3 @@ export default function Navbar() {
   )
 }
 
-function LogoMark({ size = 40 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="48" stroke="white" strokeWidth="4"/>
-      <circle cx="50" cy="50" r="36" stroke="white" strokeWidth="1.5" strokeDasharray="2 4"/>
-      <path d="M50 20 C60 30, 75 40, 72 55 C69 68, 55 75, 45 70 C32 63, 28 45, 38 35 Z" stroke="#E31E24" strokeWidth="2" fill="none"/>
-      <text x="50" y="63" textAnchor="middle" fontFamily="Oswald,sans-serif" fontWeight="700" fontSize="32" fill="white">T</text>
-    </svg>
-  )
-}
