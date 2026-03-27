@@ -24,9 +24,9 @@ function InfoItem({ icon, label, value, href }) {
 }
 
 const HOURS = [
-  { day: 'Monday – Friday', time: 'Early – 8pm' },
-  { day: 'Saturday', time: 'Morning – Afternoon' },
-  { day: 'Sunday', time: 'Morning – Afternoon' },
+  { day: 'Monday – Thursday', time: '6:30am – 9:30pm' },
+  { day: 'Friday', time: '6:30am – 8:00pm' },
+  { day: 'Saturday – Sunday', time: '9:00am – 6:30pm' },
 ]
 
 export default function Contact() {
@@ -77,10 +77,16 @@ export default function Contact() {
               href="tel:01481726684"
             />
             <InfoItem
+              icon={<EmailIcon />}
+              label="Email"
+              value="info@thetrainstation.co.gg"
+              href="mailto:info@thetrainstation.co.gg"
+            />
+            <InfoItem
               icon={<LocationIcon />}
               label="Address"
-              value={<>La Route des Longs Camps<br />Guernsey, GY2 4UQ</>}
-              href="https://maps.google.com/?q=La+Route+des+Longs+Camps+Guernsey+GY2+4UQ"
+              value={<>The Guernsey Tennis Club<br />Longcamps, St. Sampsons<br />Guernsey, GY2 4UQ</>}
+              href="https://maps.google.com/?q=The+Guernsey+Tennis+Club+Longcamps+St+Sampsons+Guernsey+GY2+4UQ"
             />
             <InfoItem
               icon={<ClockIcon />}
@@ -123,7 +129,7 @@ export default function Contact() {
                   <FacebookIcon /> Facebook
                 </a>
                 <a
-                  href="https://www.instagram.com/trainstationguernsey/"
+                  href="https://www.instagram.com/trainstationgsy/"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -244,6 +250,9 @@ function FormField({ label, name, type = 'text', value, onChange, placeholder, r
   )
 }
 
+function EmailIcon() {
+  return <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M2 7l8 5 8-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+}
 function PhoneIcon() {
   return <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 3h4l2 4-2 2a12 12 0 0 0 4 4l2-2 4 2v4a2 2 0 0 1-2 2A16 16 0 0 1 1 5a2 2 0 0 1 2-2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>
 }

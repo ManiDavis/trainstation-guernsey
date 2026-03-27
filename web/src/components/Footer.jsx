@@ -40,7 +40,7 @@ export default function Footer() {
               <SocialLink href="https://www.facebook.com/TrainStationFitnessGuernsey/" label="Facebook">
                 <FacebookIcon />
               </SocialLink>
-              <SocialLink href="https://www.instagram.com/trainstationguernsey/" label="Instagram">
+              <SocialLink href="https://www.instagram.com/trainstationgsy/" label="Instagram">
                 <InstagramIcon />
               </SocialLink>
             </div>
@@ -101,7 +101,7 @@ export default function Footer() {
                 style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', lineHeight: 1.5, transition: 'color 0.2s' }}
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
-                📍 La Route des Longs Camps<br />Guernsey, GY2 4UQ
+                📍 The Guernsey Tennis Club<br />Longcamps, St. Sampsons, GY2 4UQ
               </a>
               <a href="https://www.thetrainstation.co.gg" target="_blank" rel="noopener noreferrer"
                 style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', transition: 'color 0.2s' }}

@@ -147,10 +147,10 @@ export default function Reviews() {
 
           {/* Rating summary */}
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '3.5rem', fontWeight: 700, color: 'var(--white)', lineHeight: 1 }}>5.0</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '3.5rem', fontWeight: 700, color: 'var(--white)', lineHeight: 1 }}>4.7</div>
             <div>
               <Stars count={5} />
-              <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 4 }}>Based on Google Reviews</div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: 4 }}>4.7 / 5 · 5,218 Google Reviews</div>
             </div>
           </div>
         </div>
