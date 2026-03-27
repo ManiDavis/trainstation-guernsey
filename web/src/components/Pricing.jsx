@@ -282,7 +282,7 @@ export default function Pricing() {
       <div className="container">
         {/* Memberships */}
         <div ref={headerRef} className="reveal" style={{ textAlign: 'center', marginBottom: 56 }}>
-          <span className="section-eyebrow">Membership Prices 2025</span>
+          <span className="section-eyebrow">Membership Prices</span>
           <h2 style={{ color: 'var(--white)' }}>Transparent Pricing.<br />Zero Surprises.</h2>
           <div className="red-line red-line--center" />
           <p className="section-sub" style={{ margin: '0 auto', textAlign: 'center' }}>
