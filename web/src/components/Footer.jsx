@@ -1,114 +1,88 @@
-export default function Footer({ siteSettings }) {
-  const year = new Date().getFullYear()
-  const siteName = siteSettings?.siteName || 'Soothing Solutions'
-  const email = siteSettings?.email || 'hello@soothing-solutions.com'
-  const instagram = siteSettings?.instagramHandle
-  const facebook = siteSettings?.facebookUrl
-  const youtube = siteSettings?.youtubeUrl
+const NAV_LINKS = [
+  { href: '#why-us', label: 'About' },
+  { href: '#pricing', label: 'Pricing' },
+  { href: '#reviews', label: 'Reviews' },
+  { href: '#contact', label: 'Contact' },
+]
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+const QUICK_LINKS = [
+  { href: '#pricing', label: 'Gym Starter Package' },
+  { href: '#pricing', label: 'Block PT Sessions' },
+  { href: '#pricing', label: 'Monthly Membership' },
+  { href: '#pricing', label: 'Annual Membership' },
+  { href: '#pricing', label: 'Couples Membership' },
+  { href: '#contact', label: 'Free Trial' },
+]
+
+export default function Footer() {
+  const handleNav = (href) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <footer style={{
-      background: 'var(--charcoal)',
-      color: 'rgba(255,255,255,0.8)',
-      padding: 'clamp(48px, 7vw, 80px) 0 32px',
-    }}>
+    <footer style={{ background: '#080808', borderTop: '1px solid var(--dark-border)', paddingTop: 72, paddingBottom: 32 }}>
       <div className="container">
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '48px',
-          marginBottom: '56px',
-        }}>
+        {/* Top grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 48, marginBottom: 64 }}>
           {/* Brand */}
           <div>
-            <h3 style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '1.5rem',
-              color: 'var(--white)',
-              marginBottom: '12px',
-            }}>
-              {siteName}
-            </h3>
-            <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'rgba(255,255,255,0.6)', marginBottom: '20px' }}>
-              Wellness, yoga, and accountability coaching — helping you live with more energy, intention, and joy.
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+              <LogoMark size={36} />
+              <div>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase' }}>TrainStation</div>
+                <div style={{ fontSize: '0.55rem', letterSpacing: '0.16em', color: 'var(--muted)', textTransform: 'uppercase' }}>Strength · Fitness · Results</div>
+              </div>
+            </div>
+            <p style={{ fontSize: '0.9rem', color: 'var(--muted)', lineHeight: 1.7, maxWidth: 260, marginBottom: 24 }}>
+              Guernsey's premier gym. No contracts, premium equipment, expert trainers.
             </p>
-            <div style={{ display: 'flex', gap: '12px' }}>
-              {instagram && (
-                <SocialLink href={`https://instagram.com/${instagram.replace('@', '')}`} label="Instagram">
-                  <InstagramIcon />
-                </SocialLink>
-              )}
-              {facebook && (
-                <SocialLink href={facebook} label="Facebook">
-                  <FacebookIcon />
-                </SocialLink>
-              )}
-              {youtube && (
-                <SocialLink href={youtube} label="YouTube">
-                  <YoutubeIcon />
-                </SocialLink>
-              )}
-              {!instagram && !facebook && !youtube && (
-                <>
-                  <SocialLink href="#" label="Instagram"><InstagramIcon /></SocialLink>
-                  <SocialLink href="#" label="Facebook"><FacebookIcon /></SocialLink>
-                </>
-              )}
+            <div style={{ display: 'flex', gap: 10 }}>
+              <SocialLink href="https://www.facebook.com/TrainStationFitnessGuernsey/" label="Facebook">
+                <FacebookIcon />
+              </SocialLink>
+              <SocialLink href="https://www.instagram.com/trainstationguernsey/" label="Instagram">
+                <InstagramIcon />
+              </SocialLink>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Navigation */}
           <div>
-            <h4 style={{ color: 'var(--white)', marginBottom: '16px', fontSize: '0.85rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              Quick Links
-            </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {[
-                { label: 'Home', id: 'home' },
-                { label: 'Yoga Classes', id: 'yoga' },
-                { label: '30 Day Program', id: 'program' },
-                { label: 'Resources', id: 'resources' },
-                { label: 'Book a Call', id: 'contact' },
-              ].map((link) => (
-                <li key={link.id}>
-                  <button
-                    onClick={() => scrollTo(link.id)}
-                    style={{
-                      background: 'none',
-                      color: 'rgba(255,255,255,0.65)',
-                      fontSize: '0.9rem',
-                      transition: 'color 0.2s',
-                    }}
-                    onMouseEnter={(e) => e.target.style.color = 'var(--teal-light)'}
-                    onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.65)'}
+            <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--white)', marginBottom: 20 }}>Navigate</h4>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {NAV_LINKS.map(l => (
+                <li key={l.href}>
+                  <button onClick={() => handleNav(l.href)} style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    color: 'var(--muted)', fontSize: '0.9rem', padding: 0, textAlign: 'left',
+                    transition: 'color 0.2s',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--red)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
                   >
-                    {link.label}
+                    {l.label}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Memberships */}
           <div>
-            <h4 style={{ color: 'var(--white)', marginBottom: '16px', fontSize: '0.85rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              Services
-            </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {[
-                'One-on-One Yoga',
-                'Chair Yoga',
-                "Children's Yoga",
-                'Group Classes',
-                '30 Day Blueprint',
-                'Accountability Calls',
-              ].map((s) => (
-                <li key={s} style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem' }}>
-                  {s}
+            <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--white)', marginBottom: 20 }}>Memberships</h4>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {QUICK_LINKS.map(l => (
+                <li key={l.label}>
+                  <button onClick={() => handleNav(l.href)} style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    color: 'var(--muted)', fontSize: '0.9rem', padding: 0, textAlign: 'left',
+                    transition: 'color 0.2s',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--red)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
+                  >
+                    {l.label}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -116,44 +90,36 @@ export default function Footer({ siteSettings }) {
 
           {/* Contact */}
           <div>
-            <h4 style={{ color: 'var(--white)', marginBottom: '16px', fontSize: '0.85rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              Get in Touch
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <a href={`mailto:${email}`} style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem' }}
-                onMouseEnter={(e) => e.target.style.color = 'var(--teal-light)'}
-                onMouseLeave={(e) => e.target.style.color = 'rgba(255,255,255,0.65)'}
-              >
-                {email}
+            <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--white)', marginBottom: 20 }}>Find Us</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <a href="tel:01481726684" style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
+                📞 01481 726684
               </a>
-              <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem' }}>
-                {siteSettings?.location || 'Florida, USA (Online Worldwide)'}
-              </span>
-              <button
-                onClick={() => scrollTo('contact')}
-                className="btn btn-outline-white"
-                style={{ marginTop: '8px', fontSize: '0.875rem', padding: '10px 20px', alignSelf: 'flex-start' }}
-              >
-                Book a Call
-              </button>
+              <a href="https://maps.google.com/?q=La+Route+des+Longs+Camps+Guernsey+GY2+4UQ" target="_blank" rel="noopener noreferrer"
+                style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', lineHeight: 1.5, transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
+                📍 La Route des Longs Camps<br />Guernsey, GY2 4UQ
+              </a>
+              <a href="https://www.thetrainstation.co.gg" target="_blank" rel="noopener noreferrer"
+                style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
+                🌐 thetrainstation.co.gg
+              </a>
             </div>
           </div>
         </div>
 
-        <div style={{
-          borderTop: '1px solid rgba(255,255,255,0.1)',
-          paddingTop: '24px',
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '12px',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <p style={{ fontSize: '0.825rem', color: 'rgba(255,255,255,0.4)' }}>
-            © {year} {siteName}. All rights reserved.
+        {/* Bottom bar */}
+        <div style={{ borderTop: '1px solid var(--dark-border)', paddingTop: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+          <p style={{ fontSize: '0.8rem', color: 'var(--muted)', margin: 0 }}>
+            © {new Date().getFullYear()} TrainStation Guernsey. All rights reserved.
           </p>
-          <p style={{ fontSize: '0.825rem', color: 'rgba(255,255,255,0.4)' }}>
-            Made with care — Florida, USA
+          <p style={{ fontSize: '0.8rem', color: 'var(--muted)', margin: 0 }}>
+            Strength · Fitness · Results
           </p>
         </div>
       </div>
@@ -163,40 +129,27 @@ export default function Footer({ siteSettings }) {
 
 function SocialLink({ href, label, children }) {
   return (
-    <a
-      href={href}
-      aria-label={label}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        width: '36px',
-        height: '36px',
-        borderRadius: '50%',
-        border: '1px solid rgba(255,255,255,0.2)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: 'rgba(255,255,255,0.65)',
-        transition: 'all 0.2s',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'var(--teal-light)'
-        e.currentTarget.style.color = 'var(--teal-light)'
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'
-        e.currentTarget.style.color = 'rgba(255,255,255,0.65)'
-      }}
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} style={{
+      width: 36, height: 36, borderRadius: 'var(--radius-sm)',
+      background: 'var(--dark-mid)', border: '1px solid var(--dark-border)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      color: 'var(--muted)', transition: 'all 0.2s', textDecoration: 'none',
+    }}
+    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--red)'; e.currentTarget.style.color = 'var(--red)' }}
+    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--dark-border)'; e.currentTarget.style.color = 'var(--muted)' }}
     >
       {children}
     </a>
   )
 }
 
-function InstagramIcon() {
+function LogoMark({ size = 36 }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="48" stroke="white" strokeWidth="4"/>
+      <circle cx="50" cy="50" r="36" stroke="white" strokeWidth="1.5" strokeDasharray="2 4"/>
+      <path d="M50 20 C60 30, 75 40, 72 55 C69 68, 55 75, 45 70 C32 63, 28 45, 38 35 Z" stroke="#E31E24" strokeWidth="2" fill="none"/>
+      <text x="50" y="63" textAnchor="middle" fontFamily="Oswald,sans-serif" fontWeight="700" fontSize="32" fill="white">T</text>
     </svg>
   )
 }
@@ -209,10 +162,10 @@ function FacebookIcon() {
   )
 }
 
-function YoutubeIcon() {
+function InstagramIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
     </svg>
   )
 }
