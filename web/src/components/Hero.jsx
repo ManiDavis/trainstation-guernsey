@@ -82,7 +82,7 @@ export default function Hero() {
         {/* Main headline */}
         <h1 style={{ fontSize: 'clamp(3.5rem, 9vw, 8rem)', lineHeight: 0.92, marginBottom: 0 }}>
           <span style={{ display: 'block', color: 'var(--white)', animation: 'slideUp 0.8s ease both' }}>UNLEASH</span>
-          <span style={{ display: 'block', color: 'var(--red)', WebkitTextStroke: '2px var(--red)', WebkitTextFillColor: 'transparent', animation: 'slideUp 0.8s ease 0.15s both' }}>YOUR</span>
+          <span style={{ display: 'block', color: 'var(--red)', WebkitTextStroke: '2px var(--red)', WebkitTextFillColor: 'transparent', animation: 'slideUp 0.8s ease 0.15s both', textShadow: '0 0 20px rgba(227,30,36,0.95), 0 0 50px rgba(227,30,36,0.6), 0 0 90px rgba(227,30,36,0.3)' }}>YOUR</span>
           <span style={{ display: 'block', color: 'var(--white)', animation: 'slideUp 0.8s ease 0.3s both' }}>POWER</span>
         </h1>
 

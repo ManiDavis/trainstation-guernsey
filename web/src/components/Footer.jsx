@@ -27,7 +27,9 @@ export default function Footer({ onOpenTerms }) {
           {/* Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-              <img src="/logo.png" alt="TrainStation" style={{ width: 36, height: 36, objectFit: 'contain' }} />
+              <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <img src="/logo.png" alt="TrainStation" style={{ width: 34, height: 34, objectFit: 'contain' }} />
+              </div>
               <div>
                 <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase' }}>TrainStation</div>
                 <div style={{ fontSize: '0.55rem', letterSpacing: '0.16em', color: 'var(--muted)', textTransform: 'uppercase' }}>Strength · Fitness · Results</div>
