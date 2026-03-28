@@ -1,112 +1,37 @@
-// Site Settings
-export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
-  siteName,
-  tagline,
-  phone,
-  email,
-  location,
-  instagramHandle,
-  facebookUrl,
-  youtubeUrl,
-  calendlyUrl,
-  primaryCtaLabel
-}`
+export const SITE_SETTINGS_QUERY = `
+  *[_id == "siteSettings"][0]{
+    phone,
+    email,
+    address{ line1, line2, city, postcode },
+    openingHours[]{ _key, day, time },
+    socialFacebook,
+    socialInstagram
+  }
+`
 
-// Homepage
-export const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
-  heroHeadline,
-  heroSubheadline,
-  heroCtaLabel,
-  heroImage{ asset->{ url, metadata { dimensions } }, alt },
-  aboutHeadline,
-  aboutBio,
-  aboutPhoto{ asset->{ url, metadata { dimensions } }, alt },
-  aboutHighlights,
-  servicesHeadline,
-  servicesSubtext,
-  "testimonials": testimonials[]->{
+export const PRICING_QUERY = `
+  *[_type == "pricingPlan"] | order(order asc){
     _id,
     name,
-    role,
-    quote,
-    rating,
-    photo{ asset->{ url } }
-  }
-}`
-
-// Yoga Page
-export const YOGA_PAGE_QUERY = `*[_type == "yogaPage"][0]{
-  headline,
-  subheadline,
-  introText,
-  ctaText,
-  ctaButtonLabel,
-  locationNote,
-  "classes": classes[]->{
-    _id,
-    title,
-    classType,
-    description,
-    duration,
+    category,
     price,
     priceNote,
-    highlights,
-    isOnline,
-    isInPerson
+    altPrice,
+    badge,
+    highlighted,
+    description,
+    features
   }
-}`
+`
 
-// Program Page
-export const PROGRAM_PAGE_QUERY = `*[_type == "programPage"][0]{
-  headline,
-  subheadline,
-  trialPrice,
-  fullPrice,
-  pricingNote,
-  trialCtaLabel,
-  fullCtaLabel,
-  inclusions,
-  programWeeks,
-  ebookHeadline,
-  ebookDescription,
-  ebookCover{ asset->{ url, metadata { dimensions } }, alt },
-  "testimonials": testimonials[]->{
+export const REVIEWS_QUERY = `
+  *[_type == "review"] | order(order asc){
     _id,
-    name,
-    role,
-    quote,
+    reviewerName,
+    initials,
     rating,
-    photo{ asset->{ url } }
+    reviewDate,
+    reviewText,
+    avatarColor
   }
-}`
-
-// Resources Page
-export const RESOURCES_PAGE_QUERY = `*[_type == "resourcesPage"][0]{
-  headline,
-  subheadline,
-  communityHeadline,
-  communityDescription,
-  communityBenefits,
-  communityCtaLabel,
-  "featuredResources": featuredResources[]->{
-    _id,
-    title,
-    category,
-    excerpt,
-    isFeatured,
-    publishedAt,
-    "slug": slug.current,
-    coverImage{ asset->{ url, metadata { dimensions } }, alt }
-  }
-}`
-
-// Contact Page
-export const CONTACT_PAGE_QUERY = `*[_type == "contactPage"][0]{
-  headline,
-  subheadline,
-  bookingHeadline,
-  bookingDescription,
-  calendlyUrl,
-  formHeadline,
-  formSubtext
-}`
+`

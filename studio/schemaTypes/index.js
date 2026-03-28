@@ -1,23 +1,5 @@
 import { siteSettings } from './documents/siteSettings'
-import { homepage } from './documents/homepage'
-import { yogaPage } from './documents/yogaPage'
-import { programPage } from './documents/programPage'
-import { resourcesPage } from './documents/resourcesPage'
-import { contactPage } from './documents/contactPage'
-import { testimonial } from './documents/testimonial'
-import { yogaClass } from './documents/yogaClass'
-import { resource } from './documents/resource'
+import { pricingPlan } from './documents/pricingPlan'
+import { review } from './documents/review'
 
-export const schemaTypes = [
-  // Singleton pages
-  siteSettings,
-  homepage,
-  yogaPage,
-  programPage,
-  resourcesPage,
-  contactPage,
-  // Reusable content
-  testimonial,
-  yogaClass,
-  resource,
-]
+export const schemaTypes = [siteSettings, pricingPlan, review]

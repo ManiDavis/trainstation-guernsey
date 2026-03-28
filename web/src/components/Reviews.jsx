@@ -1,88 +1,6 @@
-import { useEffect, useRef } from 'react'
-
-// All reviews with written text from Google (4.7★ · 18 reviews total)
-const REVIEWS = [
-  {
-    name: 'Natalie Jones',
-    initials: 'NJ',
-    rating: 5,
-    date: '3 years ago',
-    text: 'Great gym, light, airy, great cardio machines for your workout 💪 Megan from Isle Health is an excellent personal trainer 💪👍',
-    color: '#DB2777',
-  },
-  {
-    name: 'Dalton Beausire',
-    initials: 'DB',
-    rating: 5,
-    date: '3 years ago',
-    text: 'Most definitely the best gym on island for weightlifters, good range of cardio equipment, which is separate to the weightlifting room meaning you do not have to deal with the noise if that is not your thing. Prices great too especially for students.',
-    color: '#2563EB',
-  },
-  {
-    name: 'stylawood',
-    initials: 'SW',
-    rating: 5,
-    date: '3 years ago',
-    text: 'Justin and Craig are great PTs Very friendly and helpful!',
-    color: '#059669',
-  },
-  {
-    name: 'Joe Lampshire',
-    initials: 'JL',
-    rating: 5,
-    date: '1 year ago',
-    text: 'Brilliant gym, great atmosphere and a very good balance of equipment which caters for the need of all. We will be back!',
-    color: '#16A34A',
-  },
-  {
-    name: 'Kenton Henley-Roussel',
-    initials: 'KH',
-    rating: 5,
-    date: '5 years ago',
-    text: 'Great gym, good equipment and not too busy',
-    color: '#7C3AED',
-  },
-  {
-    name: 'Martin Sarre',
-    initials: 'MS',
-    rating: 5,
-    date: '7 years ago',
-    text: 'Extremely friendly and helpful staff. Fantastic up to date equipment.',
-    color: '#EA580C',
-  },
-  {
-    name: 'Chris Lewis',
-    initials: 'CL',
-    rating: 5,
-    date: '6 years ago',
-    text: 'Great gym in a convenient out of town location. Plenty of weight and cardio machines and free weights upstairs plus a separate area downstairs for serious weight lifters. All at a very reasonable price.',
-    color: '#D97706',
-  },
-  {
-    name: 'Alex M.',
-    initials: 'AM',
-    rating: 5,
-    date: '6 years ago',
-    text: 'Great equipment and friendly owner. More than I can say for other gyms around. Reasonably priced as well.',
-    color: '#0891B2',
-  },
-  {
-    name: 'Jackie Gaudion',
-    initials: 'JG',
-    rating: 5,
-    date: '7 years ago',
-    text: 'Fantastic gym, great new equipment. Love the new decor',
-    color: '#BE185D',
-  },
-  {
-    name: 'Judith Stephendon',
-    initials: 'JS',
-    rating: 4,
-    date: '7 years ago',
-    text: 'Ok a bit worn but works well',
-    color: '#64748B',
-  },
-]
+import { useEffect, useRef, useState } from 'react'
+import { client } from '../sanity/client'
+import { REVIEWS_QUERY } from '../sanity/queries'
 
 function Stars({ count = 5 }) {
   return (
@@ -120,20 +38,21 @@ function ReviewCard({ review, index }) {
       </div>
 
       <p style={{ fontSize: '0.92rem', lineHeight: 1.75, color: 'var(--off-white)', flex: 1, fontStyle: 'italic' }}>
-        "{review.text}"
+        "{review.reviewText}"
       </p>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid var(--dark-border)' }}>
         <div style={{
           width: 38, height: 38, borderRadius: '50%', flexShrink: 0,
-          background: review.color, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: review.avatarColor || '#E31E24',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.85rem', color: 'white',
         }}>
           {review.initials}
         </div>
         <div>
-          <div style={{ fontWeight: 600, fontSize: '0.88rem', color: 'var(--white)' }}>{review.name}</div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>{review.date} · Google Review</div>
+          <div style={{ fontWeight: 600, fontSize: '0.88rem', color: 'var(--white)' }}>{review.reviewerName}</div>
+          <div style={{ fontSize: '0.72rem', color: 'var(--muted)' }}>{review.reviewDate} · Google Review</div>
         </div>
       </div>
     </div>
@@ -152,7 +71,12 @@ function GoogleLogo() {
 }
 
 export default function Reviews() {
+  const [reviews, setReviews] = useState([])
   const headerRef = useRef(null)
+
+  useEffect(() => {
+    client.fetch(REVIEWS_QUERY).then(setReviews)
+  }, [])
 
   useEffect(() => {
     const el = headerRef.current
@@ -183,7 +107,7 @@ export default function Reviews() {
         </div>
 
         <div className="grid-3">
-          {REVIEWS.map((r, i) => <ReviewCard key={r.name + i} review={r} index={i} />)}
+          {reviews.map((r, i) => <ReviewCard key={r._id} review={r} index={i} />)}
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 48 }}>

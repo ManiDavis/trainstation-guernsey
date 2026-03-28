@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField, defineArrayMember } from 'sanity'
 import { CogIcon } from '@sanity/icons'
 
 export const siteSettings = defineType({
@@ -7,61 +7,36 @@ export const siteSettings = defineType({
   type: 'document',
   icon: CogIcon,
   fields: [
+    defineField({ name: 'phone', title: 'Phone', type: 'string' }),
+    defineField({ name: 'email', title: 'Email', type: 'string' }),
     defineField({
-      name: 'siteName',
-      title: 'Site Name',
-      type: 'string',
-      validation: (rule) => rule.required(),
+      name: 'address',
+      title: 'Address',
+      type: 'object',
+      fields: [
+        defineField({ name: 'line1', title: 'Line 1', type: 'string' }),
+        defineField({ name: 'line2', title: 'Line 2', type: 'string' }),
+        defineField({ name: 'city', title: 'City', type: 'string' }),
+        defineField({ name: 'postcode', title: 'Postcode', type: 'string' }),
+      ],
     }),
     defineField({
-      name: 'tagline',
-      title: 'Tagline',
-      type: 'string',
+      name: 'openingHours',
+      title: 'Opening Hours',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({ name: 'day', title: 'Day(s)', type: 'string' }),
+            defineField({ name: 'time', title: 'Hours', type: 'string' }),
+          ],
+          preview: { select: { title: 'day', subtitle: 'time' } },
+        }),
+      ],
     }),
-    defineField({
-      name: 'phone',
-      title: 'Phone Number',
-      type: 'string',
-    }),
-    defineField({
-      name: 'email',
-      title: 'Email Address',
-      type: 'string',
-      validation: (rule) => rule.email(),
-    }),
-    defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'string',
-    }),
-    defineField({
-      name: 'instagramHandle',
-      title: 'Instagram Handle',
-      type: 'string',
-    }),
-    defineField({
-      name: 'facebookUrl',
-      title: 'Facebook URL',
-      type: 'url',
-    }),
-    defineField({
-      name: 'youtubeUrl',
-      title: 'YouTube URL',
-      type: 'url',
-    }),
-    defineField({
-      name: 'calendlyUrl',
-      title: 'Calendly Booking URL',
-      type: 'url',
-    }),
-    defineField({
-      name: 'primaryCtaLabel',
-      title: 'Primary CTA Button Label',
-      type: 'string',
-      initialValue: 'Book a Free Call',
-    }),
+    defineField({ name: 'socialFacebook', title: 'Facebook URL', type: 'url' }),
+    defineField({ name: 'socialInstagram', title: 'Instagram URL', type: 'url' }),
   ],
-  preview: {
-    select: { title: 'siteName', subtitle: 'tagline' },
-  },
+  preview: { prepare: () => ({ title: 'Site Settings' }) },
 })
