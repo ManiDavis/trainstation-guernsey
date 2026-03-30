@@ -13,8 +13,7 @@ const SINGLETON_IDS = [
   '4835df1c-c6ac-4c6e-aaea-a532bc3adba7',
 ]
 
-// Update this to your Vercel URL after deployment
-const PREVIEW_URL = 'http://localhost:5173'
+const PREVIEW_URL = 'https://trainstation-guernsey-web.vercel.app'
 
 const structure = (S) =>
   S.list()
@@ -66,12 +65,7 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     presentationTool({
-      previewUrl: {
-        preview: PREVIEW_URL,
-        previewMode: {
-          enable: `${PREVIEW_URL}/api/draft-mode/enable`,
-        },
-      },
+      previewUrl: PREVIEW_URL,
     }),
     visionTool(),
   ],
