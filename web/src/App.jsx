@@ -12,7 +12,6 @@ import TermsAndConditions from './components/TermsAndConditions'
 export default function App() {
   const [showTerms, setShowTerms] = useState(false)
 
-  // Allow hash-based navigation to terms
   useEffect(() => {
     const checkHash = () => setShowTerms(window.location.hash === '#terms')
     checkHash()

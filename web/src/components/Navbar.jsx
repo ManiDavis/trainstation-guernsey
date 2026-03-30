@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { client } from '../sanity/client'
+import { SITE_SETTINGS_QUERY } from '../sanity/queries'
 
 const links = [
   { href: '#why-us',  label: 'About' },
@@ -10,12 +12,17 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [settings, setSettings] = useState(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll, { passive: true })
+    client.fetch(SITE_SETTINGS_QUERY).then(setSettings).catch(() => {})
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const brandName = settings?.navBrandName || 'TrainStation'
+  const tagline   = settings?.navTagline   || 'Strength · Fitness · Results'
 
   const handleNav = (href) => {
     setOpen(false)
@@ -41,8 +48,8 @@ export default function Navbar() {
             <img src="/logo.png" alt="TrainStation" style={{ width: 42, height: 42, objectFit: 'contain' }} />
           </div>
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase', lineHeight: 1 }}>TrainStation</div>
-            <div style={{ fontSize: '0.6rem', letterSpacing: '0.18em', color: 'var(--muted)', textTransform: 'uppercase', marginTop: 3 }}>Strength · Fitness · Results</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase', lineHeight: 1 }}>{brandName}</div>
+            <div style={{ fontSize: '0.6rem', letterSpacing: '0.18em', color: 'var(--muted)', textTransform: 'uppercase', marginTop: 3 }}>{tagline}</div>
           </div>
         </button>
 
@@ -85,9 +92,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div style={{
-          background: '#111', borderTop: '1px solid #222', padding: '20px 0',
-        }}>
+        <div style={{ background: '#111', borderTop: '1px solid #222', padding: '20px 0' }}>
           <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {links.map(l => (
               <button key={l.href} onClick={() => handleNav(l.href)} style={{
@@ -115,4 +120,3 @@ export default function Navbar() {
     </nav>
   )
 }
-

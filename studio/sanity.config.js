@@ -1,10 +1,20 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { presentationTool } from 'sanity/presentation'
 import { schemaTypes } from './schemaTypes'
-import { CogIcon, TagIcon, UserIcon } from '@sanity/icons'
+import { CogIcon, TagIcon, UserIcon, StarIcon, HomeIcon } from '@sanity/icons'
 
-const SINGLETONS = ['siteSettings']
+const SINGLETONS = ['siteSettings', 'whyUs', 'gymShowcase']
+// Actual document IDs in the dataset (UUID-based)
+const SINGLETON_IDS = [
+  '873a727a-7c5e-45d5-a3b6-0c30ae62cc80',
+  '312cfba4-666f-40a9-85dd-50ba6b68ea26',
+  '4835df1c-c6ac-4c6e-aaea-a532bc3adba7',
+]
+
+// Update this to your Vercel URL after deployment
+const PREVIEW_URL = 'http://localhost:5173'
 
 const structure = (S) =>
   S.list()
@@ -13,7 +23,30 @@ const structure = (S) =>
       S.listItem()
         .title('Site Settings')
         .icon(CogIcon)
-        .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('873a727a-7c5e-45d5-a3b6-0c30ae62cc80')
+            .title('Site Settings')
+        ),
+      S.listItem()
+        .title('Why Train With Us')
+        .icon(StarIcon)
+        .child(
+          S.document()
+            .schemaType('whyUs')
+            .documentId('312cfba4-666f-40a9-85dd-50ba6b68ea26')
+            .title('Why Train With Us Section')
+        ),
+      S.listItem()
+        .title('Gym Showcase')
+        .icon(HomeIcon)
+        .child(
+          S.document()
+            .schemaType('gymShowcase')
+            .documentId('4835df1c-c6ac-4c6e-aaea-a532bc3adba7')
+            .title('Gym Showcase Section')
+        ),
       S.divider(),
       S.listItem()
         .title('Pricing Plans')
@@ -32,6 +65,14 @@ export default defineConfig({
   dataset: 'production',
   plugins: [
     structureTool({ structure }),
+    presentationTool({
+      previewUrl: {
+        preview: PREVIEW_URL,
+        previewMode: {
+          enable: `${PREVIEW_URL}/api/draft-mode/enable`,
+        },
+      },
+    }),
     visionTool(),
   ],
   schema: {

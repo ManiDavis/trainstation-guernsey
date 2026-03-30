@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react'
+import { client } from '../sanity/client'
+import { SITE_SETTINGS_QUERY } from '../sanity/queries'
+
 const NAV_LINKS = [
   { href: '#why-us', label: 'About' },
   { href: '#pricing', label: 'Pricing' },
@@ -10,14 +14,28 @@ const QUICK_LINKS = [
   { href: '#pricing', label: 'Block PT Sessions' },
   { href: '#pricing', label: 'Monthly Membership' },
   { href: '#pricing', label: 'Annual Membership' },
-  { href: '#pricing', label: 'Couples Membership' },
   { href: '#contact', label: 'Free Trial' },
 ]
 
 export default function Footer({ onOpenTerms }) {
-  const handleNav = (href) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
-  }
+  const [settings, setSettings] = useState(null)
+
+  useEffect(() => {
+    client.fetch(SITE_SETTINGS_QUERY).then(setSettings).catch(() => {})
+  }, [])
+
+  const s = settings || {}
+  const brandName  = s.navBrandName      || 'TrainStation'
+  const tagline    = s.navTagline        || 'Strength · Fitness · Results'
+  const desc       = s.footerDescription || "Guernsey's premier gym. No contracts, premium equipment, expert trainers."
+  const phone      = s.phone             || '01481 726684'
+  const facebook   = s.socialFacebook   || 'https://www.facebook.com/TrainStationFitnessGuernsey/'
+  const instagram  = s.socialInstagram  || 'https://www.instagram.com/trainstationgsy/'
+  const addr       = s.address || {}
+  const addrLine   = [addr.line1, addr.line2].filter(Boolean).join(', ')
+  const addrCity   = [addr.city, addr.postcode].filter(Boolean).join(', ')
+
+  const handleNav = (href) => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
     <footer style={{ background: '#080808', borderTop: '1px solid var(--dark-border)', paddingTop: 72, paddingBottom: 32 }}>
@@ -31,20 +49,16 @@ export default function Footer({ onOpenTerms }) {
                 <img src="/logo.png" alt="TrainStation" style={{ width: 38, height: 38, objectFit: 'contain' }} />
               </div>
               <div>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase' }}>TrainStation</div>
-                <div style={{ fontSize: '0.55rem', letterSpacing: '0.16em', color: 'var(--muted)', textTransform: 'uppercase' }}>Strength · Fitness · Results</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase' }}>{brandName}</div>
+                <div style={{ fontSize: '0.55rem', letterSpacing: '0.16em', color: 'var(--muted)', textTransform: 'uppercase' }}>{tagline}</div>
               </div>
             </div>
             <p style={{ fontSize: '0.9rem', color: 'var(--muted)', lineHeight: 1.7, maxWidth: 260, marginBottom: 24 }}>
-              Guernsey's premier gym. No contracts, premium equipment, expert trainers.
+              {desc}
             </p>
             <div style={{ display: 'flex', gap: 10 }}>
-              <SocialLink href="https://www.facebook.com/TrainStationFitnessGuernsey/" label="Facebook">
-                <FacebookIcon />
-              </SocialLink>
-              <SocialLink href="https://www.instagram.com/trainstationgsy/" label="Instagram">
-                <InstagramIcon />
-              </SocialLink>
+              <SocialLink href={facebook} label="Facebook"><FacebookIcon /></SocialLink>
+              <SocialLink href={instagram} label="Instagram"><InstagramIcon /></SocialLink>
             </div>
           </div>
 
@@ -54,14 +68,9 @@ export default function Footer({ onOpenTerms }) {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
               {NAV_LINKS.map(l => (
                 <li key={l.href}>
-                  <button onClick={() => handleNav(l.href)} style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    color: 'var(--muted)', fontSize: '0.9rem', padding: 0, textAlign: 'left',
-                    transition: 'color 0.2s',
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'var(--red)'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
-                  >
+                  <button onClick={() => handleNav(l.href)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', fontSize: '0.9rem', padding: 0, textAlign: 'left', transition: 'color 0.2s' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'var(--red)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
                     {l.label}
                   </button>
                 </li>
@@ -75,14 +84,9 @@ export default function Footer({ onOpenTerms }) {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
               {QUICK_LINKS.map(l => (
                 <li key={l.label}>
-                  <button onClick={() => handleNav(l.href)} style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    color: 'var(--muted)', fontSize: '0.9rem', padding: 0, textAlign: 'left',
-                    transition: 'color 0.2s',
-                  }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'var(--red)'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
-                  >
+                  <button onClick={() => handleNav(l.href)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--muted)', fontSize: '0.9rem', padding: 0, textAlign: 'left', transition: 'color 0.2s' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'var(--red)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
                     {l.label}
                   </button>
                 </li>
@@ -94,17 +98,19 @@ export default function Footer({ onOpenTerms }) {
           <div>
             <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--white)', marginBottom: 20 }}>Find Us</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <a href="tel:01481726684" style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', transition: 'color 0.2s' }}
+              <a href={`tel:${phone.replace(/\s/g, '')}`} style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
-                📞 01481 726684
+                📞 {phone}
               </a>
-              <a href="https://maps.google.com/?q=La+Route+des+Longs+Camps+Guernsey+GY2+4UQ" target="_blank" rel="noopener noreferrer"
-                style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', lineHeight: 1.5, transition: 'color 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
-                onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
-                📍 The Guernsey Tennis Club<br />Longcamps, St. Sampsons, GY2 4UQ
-              </a>
+              {(addrLine || addrCity) && (
+                <a href="https://maps.google.com/?q=The+Guernsey+Tennis+Club+Longcamps+St+Sampsons+GY2+4UQ" target="_blank" rel="noopener noreferrer"
+                  style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', lineHeight: 1.5, transition: 'color 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
+                  📍 {addrLine && <>{addrLine}<br /></>}{addrCity}
+                </a>
+              )}
               <a href="https://www.thetrainstation.co.gg" target="_blank" rel="noopener noreferrer"
                 style={{ color: 'var(--muted)', fontSize: '0.9rem', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
@@ -121,18 +127,12 @@ export default function Footer({ onOpenTerms }) {
             © {new Date().getFullYear()} TrainStation Guernsey. All rights reserved.
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <a
-              href="#terms"
-              onClick={onOpenTerms}
-              style={{ fontSize: '0.8rem', color: 'var(--muted)', transition: 'color 0.2s', textDecoration: 'none' }}
+            <a href="#terms" onClick={onOpenTerms} style={{ fontSize: '0.8rem', color: 'var(--muted)', transition: 'color 0.2s', textDecoration: 'none' }}
               onMouseEnter={e => e.currentTarget.style.color = 'var(--red)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
-            >
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}>
               Terms &amp; Conditions
             </a>
-            <p style={{ fontSize: '0.8rem', color: 'var(--muted)', margin: 0 }}>
-              Strength · Fitness · Results
-            </p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--muted)', margin: 0 }}>Strength · Fitness · Results</p>
           </div>
         </div>
       </div>
@@ -149,13 +149,11 @@ function SocialLink({ href, label, children }) {
       color: 'var(--muted)', transition: 'all 0.2s', textDecoration: 'none',
     }}
     onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--red)'; e.currentTarget.style.color = 'var(--red)' }}
-    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--dark-border)'; e.currentTarget.style.color = 'var(--muted)' }}
-    >
+    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--dark-border)'; e.currentTarget.style.color = 'var(--muted)' }}>
       {children}
     </a>
   )
 }
-
 
 function FacebookIcon() {
   return (
