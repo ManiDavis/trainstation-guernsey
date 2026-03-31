@@ -96,6 +96,14 @@ export const siteSettings = defineType({
 
     // ── NAVBAR ───────────────────────────────────────────────
     defineField({
+      name: 'navLogo',
+      title: 'Logo Image',
+      type: 'image',
+      description: 'Logo shown in the navbar circle. Upload your gym logo here.',
+      options: { hotspot: true },
+      group: 'navbar',
+    }),
+    defineField({
       name: 'navBrandName',
       title: 'Brand Name',
       type: 'string',

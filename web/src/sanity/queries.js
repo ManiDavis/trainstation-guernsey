@@ -10,6 +10,7 @@ export const SITE_SETTINGS_QUERY = `
     heroCta2,
     heroImage,
     heroStats[]{ _key, value, suffix, label },
+    navLogo,
     navBrandName,
     navTagline,
     footerDescription,

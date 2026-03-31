@@ -58,8 +58,7 @@ export default function Hero() {
   const cta2     = s.heroCta2   || 'View Pricing'
   const stats    = s.heroStats?.length ? s.heroStats : FALLBACK_STATS
 
-  // Use uploaded Sanity image if available, otherwise fall back to local file
-  const bgImage = s.heroImage ? urlFor(s.heroImage).width(1920).url() : '/gym-hero.jpg'
+  const bgImage = s.heroImage ? urlFor(s.heroImage).width(1920).url() : null
 
   const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
   const scrollToPricing = () => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })
@@ -67,13 +66,15 @@ export default function Hero() {
   return (
     <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden', background: 'var(--black)' }}>
       {/* Gym background photo */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center 40%',
-        backgroundRepeat: 'no-repeat',
-      }} />
+      {bgImage && (
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
+          backgroundRepeat: 'no-repeat',
+        }} />
+      )}
 
       {/* Dark overlay */}
       <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.62)' }} />

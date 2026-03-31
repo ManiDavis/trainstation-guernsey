@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { client } from '../sanity/client'
 import { SITE_SETTINGS_QUERY } from '../sanity/queries'
+import { urlFor } from '../sanity/imageUrl'
 
 const links = [
   { href: '#why-us',  label: 'About' },
@@ -21,6 +22,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const logoUrl   = settings?.navLogo ? urlFor(settings.navLogo).width(84).url() : null
   const brandName = settings?.navBrandName || 'TrainStation'
   const tagline   = settings?.navTagline   || 'Strength · Fitness · Results'
 
@@ -45,7 +47,10 @@ export default function Navbar() {
           style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12 }}
         >
           <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
-            <img src="/logo.png" alt="TrainStation" style={{ width: 42, height: 42, objectFit: 'contain' }} />
+            {logoUrl
+              ? <img src={logoUrl} alt={brandName} style={{ width: 42, height: 42, objectFit: 'contain' }} />
+              : <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#111', letterSpacing: '0.05em' }}>TS</span>
+            }
           </div>
           <div style={{ textAlign: 'left' }}>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase', lineHeight: 1 }}>{brandName}</div>

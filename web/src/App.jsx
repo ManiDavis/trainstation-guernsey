@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { VisualEditing } from '@sanity/visual-editing'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import WhyUs from './components/WhyUs'
@@ -8,6 +9,8 @@ import Reviews from './components/Reviews'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import TermsAndConditions from './components/TermsAndConditions'
+
+const inPresentation = typeof window !== 'undefined' && window.parent !== window
 
 export default function App() {
   const [showTerms, setShowTerms] = useState(false)
@@ -47,6 +50,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer onOpenTerms={openTerms} />
+      {inPresentation && <VisualEditing />}
     </>
   )
 }
