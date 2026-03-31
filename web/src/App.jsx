@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { VisualEditing } from '@sanity/visual-editing'
+import { VisualEditing } from '@sanity/visual-editing/react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import WhyUs from './components/WhyUs'
