@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { client } from '../sanity/client'
 import { SITE_SETTINGS_QUERY } from '../sanity/queries'
+import { urlFor } from '../sanity/imageUrl'
 
 const NAV_LINKS = [
   { href: '#why-us', label: 'About' },
@@ -25,6 +26,7 @@ export default function Footer({ onOpenTerms }) {
   }, [])
 
   const s = settings || {}
+  const logoUrl    = s.navLogo ? urlFor(s.navLogo).width(76).url() : null
   const brandName  = s.navBrandName      || 'TrainStation'
   const tagline    = s.navTagline        || 'Strength · Fitness · Results'
   const desc       = s.footerDescription || "Guernsey's premier gym. No contracts, premium equipment, expert trainers."
@@ -46,7 +48,10 @@ export default function Footer({ onOpenTerms }) {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
               <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, overflow: 'hidden' }}>
-                <img src="/logo.png" alt="TrainStation" style={{ width: 38, height: 38, objectFit: 'contain' }} />
+                {logoUrl
+                  ? <img src={logoUrl} alt={brandName} style={{ width: 38, height: 38, objectFit: 'contain' }} />
+                  : <span style={{ fontSize: '0.6rem', fontWeight: 800, color: '#111' }}>TS</span>
+                }
               </div>
               <div>
                 <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--white)', textTransform: 'uppercase' }}>{brandName}</div>
