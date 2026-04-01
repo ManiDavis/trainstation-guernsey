@@ -19,7 +19,24 @@ export const SITE_SETTINGS_QUERY = `
     address{ line1, line2, city, postcode },
     openingHours[]{ _key, day, time },
     socialFacebook,
-    socialInstagram
+    socialInstagram,
+    showWhyUs,
+    showGymShowcase,
+    showPricing,
+    showReviews,
+    showContact,
+    announcementEnabled,
+    announcementText,
+    announcementLinkLabel,
+    announcementLinkUrl,
+    announcementStyle,
+    customSectionEnabled,
+    customSectionEyebrow,
+    customSectionHeading,
+    customSectionBody,
+    customSectionImage,
+    customSectionCtaLabel,
+    customSectionCtaUrl
   }
 `
 

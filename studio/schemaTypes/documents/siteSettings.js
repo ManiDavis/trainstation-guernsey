@@ -7,12 +7,52 @@ export const siteSettings = defineType({
   type: 'document',
   icon: CogIcon,
   groups: [
+    { name: 'visibility', title: 'Section Visibility' },
     { name: 'hero', title: 'Hero Section' },
     { name: 'navbar', title: 'Navbar' },
     { name: 'footer', title: 'Footer' },
     { name: 'contact', title: 'Contact Info' },
+    { name: 'announcement', title: 'Announcement Banner' },
+    { name: 'customSection', title: 'Extra Content Block' },
   ],
   fields: [
+    // ── SECTION VISIBILITY ───────────────────────────────────
+    defineField({
+      name: 'showWhyUs',
+      title: 'Show "Why Us" Section',
+      type: 'boolean',
+      initialValue: true,
+      group: 'visibility',
+    }),
+    defineField({
+      name: 'showGymShowcase',
+      title: 'Show Gym Showcase Section',
+      type: 'boolean',
+      initialValue: true,
+      group: 'visibility',
+    }),
+    defineField({
+      name: 'showPricing',
+      title: 'Show Pricing Section',
+      type: 'boolean',
+      initialValue: true,
+      group: 'visibility',
+    }),
+    defineField({
+      name: 'showReviews',
+      title: 'Show Reviews Section',
+      type: 'boolean',
+      initialValue: true,
+      group: 'visibility',
+    }),
+    defineField({
+      name: 'showContact',
+      title: 'Show Contact Section',
+      type: 'boolean',
+      initialValue: true,
+      group: 'visibility',
+    }),
+
     // ── HERO ─────────────────────────────────────────────────
     defineField({
       name: 'heroEyebrow',
@@ -161,6 +201,102 @@ export const siteSettings = defineType({
     }),
     defineField({ name: 'socialFacebook', title: 'Facebook URL', type: 'url', group: 'contact' }),
     defineField({ name: 'socialInstagram', title: 'Instagram URL', type: 'url', group: 'contact' }),
+
+    // ── ANNOUNCEMENT BANNER ──────────────────────────────────
+    defineField({
+      name: 'announcementEnabled',
+      title: 'Show Announcement Banner',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Turn on to display a banner at the top of the page',
+      group: 'announcement',
+    }),
+    defineField({
+      name: 'announcementText',
+      title: 'Announcement Text',
+      type: 'string',
+      description: 'Main message shown in the banner (e.g. "Bank Holiday hours this weekend!")',
+      group: 'announcement',
+    }),
+    defineField({
+      name: 'announcementLinkLabel',
+      title: 'Link Button Label',
+      type: 'string',
+      description: 'Optional — leave blank to show no button',
+      group: 'announcement',
+    }),
+    defineField({
+      name: 'announcementLinkUrl',
+      title: 'Link Button URL',
+      type: 'url',
+      description: 'Where the button links to (can be an external URL or #section)',
+      group: 'announcement',
+    }),
+    defineField({
+      name: 'announcementStyle',
+      title: 'Banner Colour',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Red (brand)', value: 'red' },
+          { title: 'Dark', value: 'dark' },
+          { title: 'Yellow / Warning', value: 'yellow' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'red',
+      group: 'announcement',
+    }),
+
+    // ── EXTRA CONTENT BLOCK ──────────────────────────────────
+    defineField({
+      name: 'customSectionEnabled',
+      title: 'Show Extra Content Block',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Turn on to display a custom section below Reviews',
+      group: 'customSection',
+    }),
+    defineField({
+      name: 'customSectionEyebrow',
+      title: 'Eyebrow Label',
+      type: 'string',
+      description: 'Small label above the heading (e.g. "New for 2026")',
+      group: 'customSection',
+    }),
+    defineField({
+      name: 'customSectionHeading',
+      title: 'Heading',
+      type: 'string',
+      group: 'customSection',
+    }),
+    defineField({
+      name: 'customSectionBody',
+      title: 'Body Text',
+      type: 'text',
+      rows: 4,
+      group: 'customSection',
+    }),
+    defineField({
+      name: 'customSectionImage',
+      title: 'Image (optional)',
+      type: 'image',
+      options: { hotspot: true },
+      group: 'customSection',
+    }),
+    defineField({
+      name: 'customSectionCtaLabel',
+      title: 'Button Label',
+      type: 'string',
+      description: 'Optional — leave blank to show no button',
+      group: 'customSection',
+    }),
+    defineField({
+      name: 'customSectionCtaUrl',
+      title: 'Button URL',
+      type: 'url',
+      group: 'customSection',
+    }),
   ],
   preview: { prepare: () => ({ title: 'Site Settings' }) },
 })
