@@ -30,13 +30,33 @@ export const SITE_SETTINGS_QUERY = `
     announcementLinkLabel,
     announcementLinkUrl,
     announcementStyle,
-    customSectionEnabled,
-    customSectionEyebrow,
-    customSectionHeading,
-    customSectionBody,
-    customSectionImage,
-    customSectionCtaLabel,
-    customSectionCtaUrl
+    showPersonalTrainers,
+    showTrainersInNav,
+    contentBlockEnabled,
+    contentBlockLayout,
+    contentBlockEyebrow,
+    contentBlockHeading,
+    contentBlockBody,
+    contentBlockImage,
+    contentBlockCtaLabel,
+    contentBlockCtaUrl,
+    statsBannerEnabled,
+    statsBannerHeading,
+    statsBannerStyle,
+    statsBannerStats[]{ _key, value, label },
+    ctaBannerEnabled,
+    ctaBannerStyle,
+    ctaBannerEyebrow,
+    ctaBannerHeading,
+    ctaBannerSubtext,
+    ctaBannerCtaLabel,
+    ctaBannerCtaUrl,
+    ctaBannerSecondaryLabel,
+    ctaBannerSecondaryUrl,
+    galleryEnabled,
+    galleryEyebrow,
+    galleryHeading,
+    galleryImages[]{ _key, asset, alt }
   }
 `
 
@@ -90,5 +110,25 @@ export const REVIEWS_QUERY = `
     reviewDate,
     reviewText,
     avatarColor
+  }
+`
+
+export const PERSONAL_TRAINERS_QUERY = `
+  *[_type == "personalTrainers"][0]{
+    eyebrow,
+    heading,
+    subheading
+  }
+`
+
+export const TRAINERS_QUERY = `
+  *[_type == "trainer" && enabled != false] | order(order asc){
+    _id,
+    name,
+    role,
+    image,
+    bio,
+    accolades,
+    order
   }
 `

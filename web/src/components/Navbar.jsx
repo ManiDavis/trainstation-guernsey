@@ -3,7 +3,7 @@ import { client } from '../sanity/client'
 import { SITE_SETTINGS_QUERY } from '../sanity/queries'
 import { urlFor } from '../sanity/imageUrl'
 
-const links = [
+const BASE_LINKS = [
   { href: '#why-us',  label: 'About' },
   { href: '#pricing', label: 'Pricing' },
   { href: '#reviews', label: 'Reviews' },
@@ -21,6 +21,10 @@ export default function Navbar() {
     client.fetch(SITE_SETTINGS_QUERY).then(setSettings).catch(() => {})
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const links = settings?.showTrainersInNav
+    ? [BASE_LINKS[0], { href: '#trainers', label: 'Our Trainers' }, ...BASE_LINKS.slice(1)]
+    : BASE_LINKS
 
   const logoUrl   = settings?.navLogo ? urlFor(settings.navLogo).width(84).url() : null
   const brandName = settings?.navBrandName || 'TrainStation'

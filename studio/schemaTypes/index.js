@@ -3,5 +3,7 @@ import { whyUs } from './documents/whyUs'
 import { gymShowcase } from './documents/gymShowcase'
 import { pricingPlan } from './documents/pricingPlan'
 import { review } from './documents/review'
+import { personalTrainers } from './documents/personalTrainers'
+import { trainer } from './documents/trainer'
 
-export const schemaTypes = [siteSettings, whyUs, gymShowcase, pricingPlan, review]
+export const schemaTypes = [siteSettings, whyUs, gymShowcase, pricingPlan, review, personalTrainers, trainer]

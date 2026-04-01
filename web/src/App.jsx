@@ -13,6 +13,10 @@ import Footer from './components/Footer'
 import TermsAndConditions from './components/TermsAndConditions'
 import AnnouncementBanner from './components/AnnouncementBanner'
 import CustomSection from './components/CustomSection'
+import PersonalTrainers from './components/PersonalTrainers'
+import StatsBanner from './components/StatsBanner'
+import CtaBanner from './components/CtaBanner'
+import Gallery from './components/Gallery'
 
 const inPresentation = typeof window !== 'undefined' && window.parent !== window
 
@@ -67,8 +71,12 @@ export default function App() {
         {vis.showWhyUs !== false && <WhyUs />}
         {vis.showGymShowcase !== false && <GymShowcase />}
         {vis.showPricing !== false && <Pricing />}
+        {settings?.statsBannerEnabled && <StatsBanner settings={settings} />}
         {vis.showReviews !== false && <Reviews />}
-        {settings?.customSectionEnabled && <CustomSection settings={settings} />}
+        {vis.showPersonalTrainers && <PersonalTrainers />}
+        {settings?.galleryEnabled && <Gallery settings={settings} />}
+        {settings?.contentBlockEnabled && <CustomSection settings={settings} />}
+        {settings?.ctaBannerEnabled && <CtaBanner settings={settings} />}
         {vis.showContact !== false && <Contact />}
       </main>
       <Footer onOpenTerms={openTerms} />
