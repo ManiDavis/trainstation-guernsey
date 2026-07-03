@@ -1,64 +1,83 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { presentationTool } from 'sanity/presentation'
 import { schemaTypes } from './schemaTypes'
+import { CogIcon, TagIcon, UserIcon, StarIcon, HomeIcon } from '@sanity/icons'
 
-const singletonTypes = ['siteSettings', 'homepage', 'yogaPage', 'programPage', 'resourcesPage', 'contactPage']
-const singletonActions = (input, context) =>
-  singletonTypes.includes(context.schemaType)
-    ? input.filter(({ action }) => action !== 'duplicate')
-    : input
+const SINGLETONS = ['siteSettings', 'whyUs', 'gymShowcase']
+// Actual document IDs in the dataset (UUID-based)
+const SINGLETON_IDS = [
+  '873a727a-7c5e-45d5-a3b6-0c30ae62cc80',
+  '312cfba4-666f-40a9-85dd-50ba6b68ea26',
+  '4835df1c-c6ac-4c6e-aaea-a532bc3adba7',
+]
+
+const PREVIEW_URL = 'https://trainstation-guernsey-web.vercel.app'
 
 const structure = (S) =>
   S.list()
-    .title('Soothing Solutions')
+    .title('TrainStation Guernsey')
     .items([
       S.listItem()
         .title('Site Settings')
-        .id('siteSettings')
-        .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+        .icon(CogIcon)
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('873a727a-7c5e-45d5-a3b6-0c30ae62cc80')
+            .title('Site Settings')
+        ),
+      S.listItem()
+        .title('Why Train With Us')
+        .icon(StarIcon)
+        .child(
+          S.document()
+            .schemaType('whyUs')
+            .documentId('312cfba4-666f-40a9-85dd-50ba6b68ea26')
+            .title('Why Train With Us Section')
+        ),
+      S.listItem()
+        .title('Gym Showcase')
+        .icon(HomeIcon)
+        .child(
+          S.document()
+            .schemaType('gymShowcase')
+            .documentId('4835df1c-c6ac-4c6e-aaea-a532bc3adba7')
+            .title('Gym Showcase Section')
+        ),
       S.divider(),
       S.listItem()
-        .title('Homepage')
-        .id('homepage')
-        .child(S.document().schemaType('homepage').documentId('homepage')),
+        .title('Pricing Plans')
+        .icon(TagIcon)
+        .child(S.documentTypeList('pricingPlan').title('Pricing Plans')),
       S.listItem()
-        .title('Yoga Classes Page')
-        .id('yogaPage')
-        .child(S.document().schemaType('yogaPage').documentId('yogaPage')),
-      S.listItem()
-        .title('30 Day Program Page')
-        .id('programPage')
-        .child(S.document().schemaType('programPage').documentId('programPage')),
-      S.listItem()
-        .title('Resources & Community Page')
-        .id('resourcesPage')
-        .child(S.document().schemaType('resourcesPage').documentId('resourcesPage')),
-      S.listItem()
-        .title('Contact & Booking Page')
-        .id('contactPage')
-        .child(S.document().schemaType('contactPage').documentId('contactPage')),
-      S.divider(),
-      S.documentTypeListItem('yogaClass').title('Yoga Classes'),
-      S.documentTypeListItem('testimonial').title('Testimonials'),
-      S.documentTypeListItem('resource').title('Resources / Articles'),
+        .title('Reviews')
+        .icon(UserIcon)
+        .child(S.documentTypeList('review').title('Reviews')),
     ])
 
 export default defineConfig({
-  name: 'soothing-solutions',
-  title: 'Soothing Solutions',
-  projectId: '1y9no5l1',
+  name: 'trainstation',
+  title: 'TrainStation Guernsey',
+  projectId: 'weak5669',
   dataset: 'production',
   plugins: [
     structureTool({ structure }),
+    presentationTool({
+      previewUrl: PREVIEW_URL,
+    }),
     visionTool(),
   ],
   schema: {
     types: schemaTypes,
     templates: (templates) =>
-      templates.filter(({ schemaType }) => !singletonTypes.includes(schemaType)),
+      templates.filter(({ schemaType }) => !SINGLETONS.includes(schemaType)),
   },
   document: {
-    actions: singletonActions,
+    actions: (input, context) =>
+      SINGLETONS.includes(context.schemaType)
+        ? input.filter(({ action }) => action !== 'duplicate')
+        : input,
   },
 })

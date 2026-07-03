@@ -1,23 +1,9 @@
 import { siteSettings } from './documents/siteSettings'
-import { homepage } from './documents/homepage'
-import { yogaPage } from './documents/yogaPage'
-import { programPage } from './documents/programPage'
-import { resourcesPage } from './documents/resourcesPage'
-import { contactPage } from './documents/contactPage'
-import { testimonial } from './documents/testimonial'
-import { yogaClass } from './documents/yogaClass'
-import { resource } from './documents/resource'
+import { whyUs } from './documents/whyUs'
+import { gymShowcase } from './documents/gymShowcase'
+import { pricingPlan } from './documents/pricingPlan'
+import { review } from './documents/review'
+import { personalTrainers } from './documents/personalTrainers'
+import { trainer } from './documents/trainer'
 
-export const schemaTypes = [
-  // Singleton pages
-  siteSettings,
-  homepage,
-  yogaPage,
-  programPage,
-  resourcesPage,
-  contactPage,
-  // Reusable content
-  testimonial,
-  yogaClass,
-  resource,
-]
+export const schemaTypes = [siteSettings, whyUs, gymShowcase, pricingPlan, review, personalTrainers, trainer]

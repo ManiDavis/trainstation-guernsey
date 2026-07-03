@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import { VisualEditing } from '@sanity/visual-editing/react'
+import { client } from './sanity/client'
+import { SITE_SETTINGS_QUERY } from './sanity/queries'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import WhyUs from './components/WhyUs'
@@ -8,11 +11,32 @@ import Reviews from './components/Reviews'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import TermsAndConditions from './components/TermsAndConditions'
+import AnnouncementBanner from './components/AnnouncementBanner'
+import CustomSection from './components/CustomSection'
+import PersonalTrainers from './components/PersonalTrainers'
+import StatsBanner from './components/StatsBanner'
+import CtaBanner from './components/CtaBanner'
+import Gallery from './components/Gallery'
+
+const inPresentation = typeof window !== 'undefined' && window.parent !== window
+
+// Default all sections to visible when settings haven't loaded yet
+const defaultVisibility = {
+  showWhyUs: true,
+  showGymShowcase: true,
+  showPricing: true,
+  showReviews: true,
+  showContact: true,
+}
 
 export default function App() {
   const [showTerms, setShowTerms] = useState(false)
+  const [settings, setSettings] = useState(null)
 
-  // Allow hash-based navigation to terms
+  useEffect(() => {
+    client.fetch(SITE_SETTINGS_QUERY).then(setSettings).catch(() => {})
+  }, [])
+
   useEffect(() => {
     const checkHash = () => setShowTerms(window.location.hash === '#terms')
     checkHash()
@@ -36,18 +60,28 @@ export default function App() {
     return <TermsAndConditions onClose={closeTerms} />
   }
 
+  const vis = settings ?? defaultVisibility
+
   return (
     <>
+      {settings?.announcementEnabled && <AnnouncementBanner settings={settings} />}
       <Navbar />
       <main>
         <Hero />
-        <WhyUs />
-        <GymShowcase />
-        <Pricing />
-        <Reviews />
-        <Contact />
+        {vis.showWhyUs !== false && <WhyUs />}
+        {vis.showGymShowcase !== false && <GymShowcase />}
+        {vis.showPricing !== false && <Pricing />}
+        {settings?.statsBannerEnabled && <StatsBanner settings={settings} />}
+        {vis.showReviews !== false && <Reviews />}
+        {vis.showPersonalTrainers && <PersonalTrainers />}
+        {settings?.galleryEnabled && <Gallery settings={settings} />}
+        {settings?.contentBlockEnabled && <CustomSection settings={settings} />}
+        {settings?.ctaBannerEnabled && <CtaBanner settings={settings} />}
+        {vis.showContact !== false && <Contact />}
       </main>
       <Footer onOpenTerms={openTerms} />
+      {inPresentation && <VisualEditing />}
     </>
   )
 }
+
