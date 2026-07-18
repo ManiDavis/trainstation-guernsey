@@ -50,7 +50,7 @@ export default function GymShowcase() {
       <div className="container">
         <div className="reveal" style={{ display: 'flex', gap: 80, alignItems: 'center', flexWrap: 'wrap' }}>
           {/* Left: text */}
-          <div style={{ flex: '1 1 340px' }}>
+          <div style={{ flex: '1 1 340px', minWidth: 0 }}>
             <span className="section-eyebrow">{eyebrow}</span>
             <h2 style={{ color: 'var(--white)', marginBottom: 16 }}>
               {headingLines.map((line, i) => (
@@ -78,9 +78,9 @@ export default function GymShowcase() {
           </div>
 
           {/* Right: visual panels */}
-          <div className="reveal reveal-delay-2" style={{ flex: '1 1 360px', display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto auto', gap: 12, minHeight: 420 }}>
+          <div className="reveal reveal-delay-2 showcase-visual" style={{ flex: '1 1 360px', minWidth: 0, display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gridTemplateRows: 'auto auto', gap: 12, minHeight: 420 }}>
             {/* Top-left large panel — brand */}
-            <div style={{
+            <div className="showcase-brand" style={{
               gridRow: '1 / 3', background: 'var(--dark-mid)',
               borderRadius: 'var(--radius-md)', border: '1px solid var(--dark-border)',
               display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
@@ -95,7 +95,7 @@ export default function GymShowcase() {
                 </svg>
               </div>
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: 700, color: 'var(--white)', lineHeight: 1 }}>{panelBrand}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem, 7vw, 2.5rem)', fontWeight: 700, color: 'var(--white)', lineHeight: 1 }}>{panelBrand}</div>
                 <div style={{ fontSize: '0.75rem', letterSpacing: '0.15em', color: 'var(--red)', textTransform: 'uppercase', marginTop: 4 }}>{panelBrandSub}</div>
               </div>
             </div>
@@ -126,6 +126,18 @@ export default function GymShowcase() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          /* Give the ROGUE brand panel the full width on mobile so its
+             text can't clip; stat + rating sit side-by-side beneath it. */
+          .showcase-brand {
+            grid-row: 1 / 2 !important;
+            grid-column: 1 / -1 !important;
+            min-height: 160px !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }

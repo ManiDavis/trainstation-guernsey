@@ -153,11 +153,11 @@ export default function Contact() {
                     >
                       <option value="">Select an option…</option>
                       <option value="free-trial">Free Trial</option>
-                      <option value="gold">Gold Membership (£44.50/mo)</option>
-                      <option value="casual">Casual Membership (£49/mo)</option>
-                      <option value="student">Student Membership (£30/mo)</option>
-                      <option value="gym-starter">Gym Starter PT Package (£100)</option>
-                      <option value="block-offer">Block Offer — 4 PT Sessions (£150)</option>
+                      <option value="standard">Standard Membership (£44.50/mo standing order)</option>
+                      <option value="student-senior">Student / Senior Membership (£35/mo)</option>
+                      <option value="couples">Couples Membership (£85/mo)</option>
+                      <option value="day-pass">Day Pass (£8/session)</option>
+                      <option value="personal-training">Personal Training</option>
                       <option value="general">General Enquiry</option>
                     </select>
                   </div>

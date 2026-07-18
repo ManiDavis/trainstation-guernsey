@@ -11,10 +11,10 @@ const NAV_LINKS = [
 ]
 
 const QUICK_LINKS = [
-  { href: '#pricing', label: 'Gym Starter Package' },
-  { href: '#pricing', label: 'Block PT Sessions' },
-  { href: '#pricing', label: 'Monthly Membership' },
-  { href: '#pricing', label: 'Annual Membership' },
+  { href: '#pricing', label: 'Memberships' },
+  { href: '#pricing', label: 'Day Pass' },
+  { href: '#pricing', label: 'Personal Training' },
+  { href: '#pricing', label: 'Coached Packages' },
   { href: '#contact', label: 'Free Trial' },
 ]
 
