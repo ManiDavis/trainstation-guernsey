@@ -148,7 +148,7 @@ export default function Pricing() {
   }, [])
 
   const memberships = plans.filter(p => p.category === 'membership')
-  const ptPackages = plans.filter(p => p.category === 'pt-package' || p.category === 'non-member')
+  const ptPackages = plans.filter(p => p.category === 'pt-package')
 
   return (
     <section id="pricing" className="section section--darker">

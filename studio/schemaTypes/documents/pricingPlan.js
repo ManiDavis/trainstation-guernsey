@@ -16,7 +16,6 @@ export const pricingPlan = defineType({
         list: [
           { title: 'Membership', value: 'membership' },
           { title: 'PT Package', value: 'pt-package' },
-          { title: 'Non-Member', value: 'non-member' },
         ],
         layout: 'radio',
       },
