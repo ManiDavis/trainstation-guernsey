@@ -18,7 +18,7 @@ function MembershipCard({ plan, index }) {
   return (
     <div
       ref={ref}
-      className={`card reveal reveal-delay-${(index % 4) + 1}`}
+      className={`card reveal reveal-delay-${(index % 4) + 1} pricing-card`}
       style={{
         padding: '32px 28px',
         position: 'relative',
@@ -38,30 +38,34 @@ function MembershipCard({ plan, index }) {
         </div>
       )}
 
-      <div style={{ marginBottom: 20 }}>
-        <div style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 600, letterSpacing: '0.06em', color: 'var(--muted-light)', textTransform: 'uppercase', marginBottom: 12 }}>
-          {plan.name}
-        </div>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 700, color: plan.highlighted ? 'var(--red)' : 'var(--white)', lineHeight: 1 }}>
-            {plan.price}
-          </span>
-          {plan.priceNote && (
-            <span style={{ fontSize: '0.8rem', color: 'var(--muted)', lineHeight: 1.3 }}>{plan.priceNote}</span>
+      {/* Head region — kept as one subgrid track so the divider lines up
+          across every card regardless of how tall the content above it is. */}
+      <div className="pricing-card-head" style={{ paddingBottom: 20, borderBottom: '1px solid var(--dark-border)' }}>
+        <div style={{ marginBottom: plan.description ? 20 : 0 }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 600, letterSpacing: '0.06em', color: 'var(--muted-light)', textTransform: 'uppercase', marginBottom: 12 }}>
+            {plan.name}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 700, color: plan.highlighted ? 'var(--red)' : 'var(--white)', lineHeight: 1 }}>
+              {plan.price}
+            </span>
+            {plan.priceNote && (
+              <span style={{ fontSize: '0.8rem', color: 'var(--muted)', lineHeight: 1.3 }}>{plan.priceNote}</span>
+            )}
+          </div>
+          {plan.altPrice && (
+            <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginTop: 6 }}>{plan.altPrice}</div>
           )}
         </div>
-        {plan.altPrice && (
-          <div style={{ fontSize: '0.82rem', color: 'var(--muted)', marginTop: 6 }}>{plan.altPrice}</div>
+
+        {plan.description && (
+          <p style={{ fontSize: '0.88rem', color: 'var(--muted-light)', lineHeight: 1.6, margin: 0 }}>
+            {plan.description}
+          </p>
         )}
       </div>
 
-      {plan.description && (
-        <p style={{ fontSize: '0.88rem', color: 'var(--muted-light)', lineHeight: 1.6, marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid var(--dark-border)' }}>
-          {plan.description}
-        </p>
-      )}
-
-      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10, paddingTop: 20 }}>
         {(plan.features || []).map((f, i) => (
           <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: '0.88rem', color: 'var(--off-white)' }}>
             <span style={{ color: 'var(--red)', flexShrink: 0, marginTop: 1 }}>✓</span>
@@ -162,7 +166,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="grid-4">
+        <div className="grid-4 pricing-grid">
           {memberships.map((plan, i) => <MembershipCard key={plan._id} plan={plan} index={i} />)}
         </div>
 
@@ -188,6 +192,19 @@ export default function Pricing() {
           </button>
         </div>
       </div>
+
+      <style>{`
+        /* Align the divider across every membership card: each card becomes a
+           2-row subgrid sharing the parent's row tracks, so the head region
+           sizes to the tallest card and the divider lands at one level. */
+        .pricing-card { display: grid; row-gap: 0; }
+        @supports (grid-template-rows: subgrid) {
+          .pricing-grid > .pricing-card {
+            grid-row: span 2;
+            grid-template-rows: subgrid;
+          }
+        }
+      `}</style>
     </section>
   )
 }
