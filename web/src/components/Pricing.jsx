@@ -151,6 +151,36 @@ export default function Pricing() {
     return () => obs.disconnect()
   }, [])
 
+  // With the cards laid out in a centered flex wrap, align each membership
+  // card's divider by equalising the head heights per visual row. Re-runs on
+  // data change, resize and once web fonts have settled.
+  useEffect(() => {
+    const equalize = () => {
+      const heads = Array.from(document.querySelectorAll('.pricing-members .pricing-card-head'))
+      heads.forEach(h => { h.style.minHeight = '' })
+      const rows = new Map()
+      heads.forEach(h => {
+        const top = Math.round(h.getBoundingClientRect().top)
+        if (!rows.has(top)) rows.set(top, [])
+        rows.get(top).push(h)
+      })
+      rows.forEach(group => {
+        const max = Math.max(...group.map(h => h.offsetHeight))
+        group.forEach(h => { h.style.minHeight = `${max}px` })
+      })
+    }
+    equalize()
+    const raf = requestAnimationFrame(equalize)
+    const timer = setTimeout(equalize, 400)
+    window.addEventListener('resize', equalize)
+    if (document.fonts?.ready) document.fonts.ready.then(equalize)
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(timer)
+      window.removeEventListener('resize', equalize)
+    }
+  }, [plans])
+
   const memberships = plans.filter(p => p.category === 'membership')
   const ptPackages = plans.filter(p => p.category === 'pt-package')
 
@@ -166,7 +196,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="grid-4 pricing-grid">
+        <div className="pricing-flex pricing-members" style={{ gap: 20, ['--card-basis']: '240px' }}>
           {memberships.map((plan, i) => <MembershipCard key={plan._id} plan={plan} index={i} />)}
         </div>
 
@@ -179,7 +209,7 @@ export default function Pricing() {
           <div style={{ flex: 1, height: 1, background: 'var(--dark-border)' }} />
         </div>
 
-        <div className="grid-3" style={{ maxWidth: 900, margin: '0 auto' }}>
+        <div className="pricing-flex" style={{ maxWidth: 900, margin: '0 auto', gap: 28, ['--card-basis']: '260px' }}>
           {ptPackages.map((plan, i) => <PTCard key={plan._id} plan={plan} index={i} />)}
         </div>
 
@@ -194,16 +224,14 @@ export default function Pricing() {
       </div>
 
       <style>{`
-        /* Align the divider across every membership card: each card becomes a
-           2-row subgrid sharing the parent's row tracks, so the head region
-           sizes to the tallest card and the divider lands at one level. */
-        .pricing-card { display: grid; row-gap: 0; }
-        @supports (grid-template-rows: subgrid) {
-          .pricing-grid > .pricing-card {
-            grid-row: span 2;
-            grid-template-rows: subgrid;
-          }
-        }
+        /* Centered wrapping so any number of cards stays centered (a grid
+           would left-align the orphans in a partial last row). Cards keep a
+           fixed basis and don't grow, so a lone card sits at its normal size
+           in the middle rather than stretching to fill the row. */
+        .pricing-flex { display: flex; flex-wrap: wrap; justify-content: center; }
+        .pricing-flex > * { flex: 0 1 var(--card-basis, 240px); max-width: 100%; }
+        @media (max-width: 600px) { .pricing-flex > * { flex-basis: 100%; } }
+        .pricing-card { display: flex; flex-direction: column; }
       `}</style>
     </section>
   )
